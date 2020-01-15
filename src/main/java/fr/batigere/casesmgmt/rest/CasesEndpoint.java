@@ -1,5 +1,6 @@
 package fr.batigere.casesmgmt.rest;
 
+import fr.batigere.casesmgmt.exceptions.UserNotFoundException;
 import fr.batigere.casesmgmt.rest.dtos.Case;
 import fr.batigere.casesmgmt.services.CasesService;
 
@@ -45,8 +46,12 @@ public class CasesEndpoint {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Case createNewCase(@Valid Case pCase) {
-        return this.casesService.createNewCase(pCase);
+    public Response createNewCase(@Valid Case pCase) {
+        try {
+            return Response.ok(this.casesService.createNewCase(pCase)).build();
+        } catch (UserNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
+        }
     }
 
     @PUT
@@ -61,8 +66,11 @@ public class CasesEndpoint {
         if (!id.equals(pCase.getId())) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
-
-        return Response.ok(this.casesService.updateCase(pCase)).build();
+        try {
+            return Response.ok(this.casesService.updateCase(pCase)).build();
+        } catch (UserNotFoundException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
+        }
     }
 
     @DELETE

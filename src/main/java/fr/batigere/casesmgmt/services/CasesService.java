@@ -4,10 +4,12 @@ import fr.batigere.casesmgmt.daos.CasesDao;
 import fr.batigere.casesmgmt.daos.UsersDao;
 import fr.batigere.casesmgmt.entities.CaseEntity;
 import fr.batigere.casesmgmt.entities.UserEntity;
+import fr.batigere.casesmgmt.exceptions.UserNotFoundException;
 import fr.batigere.casesmgmt.rest.dtos.Case;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.time.ZoneId;
 import java.util.Date;
@@ -34,21 +36,31 @@ public class CasesService {
         return this.entityToDto(entity);
     }
 
-    public Case createNewCase(Case pCase) {
+    public Case createNewCase(Case pCase) throws UserNotFoundException {
         CaseEntity entity = this.dtoToEntity(pCase);
-        UserEntity user = usersDao.findByUsername(pCase.getCreatedBy());
+        UserEntity user = null;
+        try {
+            user = usersDao.findByUsername(pCase.getCreatedBy());
+        } catch (NoResultException e){
+            throw new UserNotFoundException(e);
+        }
         entity.setCreatedBy(user);
         CaseEntity createdEntity = casesDao.save(entity);
         return this.entityToDto(createdEntity);
     }
 
-    public Case updateCase(Case pCase) {
+    public Case updateCase(Case pCase) throws UserNotFoundException {
         if(casesDao.retrieve(pCase.getId()) == null){
             return null;
         }
 
         CaseEntity entity = this.dtoToEntity(pCase);
-        UserEntity user = usersDao.findByUsername(pCase.getCreatedBy());
+        UserEntity user = null;
+        try {
+            user = usersDao.findByUsername(pCase.getCreatedBy());
+        } catch (NoResultException e){
+            throw new UserNotFoundException(e);
+        }
         entity.setCreatedBy(user);
         CaseEntity updatedEntity = casesDao.save(entity);
         return this.entityToDto(updatedEntity);
