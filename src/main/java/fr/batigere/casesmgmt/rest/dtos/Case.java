@@ -1,13 +1,12 @@
-package fr.batigere.myfirstproject.rest.dtos;
+package fr.batigere.casesmgmt.rest.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import fr.batigere.myfirstproject.rest.dtos.adapters.LocalDateAdapter;
+import fr.batigere.casesmgmt.rest.dtos.adapters.LocalDateAdapter;
 
 import javax.validation.constraints.NotBlank;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
-import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Case {

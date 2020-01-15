@@ -1,4 +1,4 @@
-package fr.batigere.myfirstproject.rest;
+package fr.batigere.casesmgmt.rest;
 
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;

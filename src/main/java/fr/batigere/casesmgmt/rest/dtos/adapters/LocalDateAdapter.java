@@ -1,4 +1,4 @@
-package fr.batigere.myfirstproject.rest.dtos.adapters;
+package fr.batigere.casesmgmt.rest.dtos.adapters;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;

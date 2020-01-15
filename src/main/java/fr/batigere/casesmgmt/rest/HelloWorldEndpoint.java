@@ -1,4 +1,4 @@
-package fr.batigere.myfirstproject.rest;
+package fr.batigere.casesmgmt.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Path;

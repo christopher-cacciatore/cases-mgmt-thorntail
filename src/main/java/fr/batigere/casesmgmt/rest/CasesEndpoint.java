@@ -1,7 +1,7 @@
-package fr.batigere.myfirstproject.rest;
+package fr.batigere.casesmgmt.rest;
 
-import fr.batigere.myfirstproject.rest.dtos.Case;
-import fr.batigere.myfirstproject.services.CasesService;
+import fr.batigere.casesmgmt.rest.dtos.Case;
+import fr.batigere.casesmgmt.services.CasesService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
