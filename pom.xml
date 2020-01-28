@@ -51,6 +51,51 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.27.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <images>
+            <image>
+              <name>batigere/${project.name}:${project.version}</name>
+              <alias>cases-mgmt</alias>
+              <build>
+                <from>openjdk:8-jre-alpine</from>
+                <ports>
+                  <port>8080</port>
+                </ports>
+                <env>
+                  <THORNTAIL_PROFILE>default</THORNTAIL_PROFILE>
+                </env>
+                <assembly>
+                  <basedir>/</basedir>
+                  <inline>
+                    <files>
+                      <file>
+                        <source>${project.build.directory}/${project.artifactId}-thorntail.jar
+                        </source>
+                        <outputDirectory>/opt</outputDirectory>
+                      </file>
+                    </files>
+                  </inline>
+                </assembly>
+                <entryPoint>
+                  <shell>java -jar /opt/${project.artifactId}-thorntail.jar -Xmx256M -S$THORNTAIL_PROFILE -Djava.net.preferIPv4Stack=true</shell>
+                </entryPoint>
+              </build>
+            </image>
+          </images>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
