@@ -3,6 +3,7 @@ package fr.batigere.casesmgmt.rest;
 import fr.batigere.casesmgmt.exceptions.UserNotFoundException;
 import fr.batigere.casesmgmt.rest.dtos.Case;
 import fr.batigere.casesmgmt.services.CasesService;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Path("/cases")
 @ApplicationScoped
+@Traced
 public class CasesEndpoint {
 
     @Inject

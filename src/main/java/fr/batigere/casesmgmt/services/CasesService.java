@@ -6,6 +6,7 @@ import fr.batigere.casesmgmt.entities.CaseEntity;
 import fr.batigere.casesmgmt.entities.UserEntity;
 import fr.batigere.casesmgmt.exceptions.UserNotFoundException;
 import fr.batigere.casesmgmt.rest.dtos.Case;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -26,16 +27,19 @@ public class CasesService {
     @Inject
     private UsersDao usersDao;
 
+    @Traced
     public List<Case> getAllCases() {
         List<CaseEntity> entities = casesDao.findAll();
         return entities.stream().map(c -> this.entityToDto(c)).collect(Collectors.toList());
     }
 
+    @Traced
     public Case getCaseById(String id) {
         CaseEntity entity = casesDao.retrieve(id);
         return this.entityToDto(entity);
     }
 
+    @Traced
     public Case createNewCase(Case pCase) throws UserNotFoundException {
         CaseEntity entity = this.dtoToEntity(pCase);
         UserEntity user = null;
@@ -49,6 +53,7 @@ public class CasesService {
         return this.entityToDto(createdEntity);
     }
 
+    @Traced
     public Case updateCase(Case pCase) throws UserNotFoundException {
         if(casesDao.retrieve(pCase.getId()) == null){
             return null;
@@ -66,6 +71,7 @@ public class CasesService {
         return this.entityToDto(updatedEntity);
     }
 
+    @Traced
     public boolean deleteCase(String id) {
         return casesDao.delete(id);
     }

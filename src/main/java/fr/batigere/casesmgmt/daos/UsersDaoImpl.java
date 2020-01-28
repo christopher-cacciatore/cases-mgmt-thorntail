@@ -2,6 +2,7 @@ package fr.batigere.casesmgmt.daos;
 
 import fr.batigere.casesmgmt.entities.CaseEntity;
 import fr.batigere.casesmgmt.entities.UserEntity;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import javax.transaction.Transactional;
 
 @Transactional
 @ApplicationScoped
+@Traced
 public class UsersDaoImpl implements UsersDao {
 
     @PersistenceContext
