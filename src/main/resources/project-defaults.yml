@@ -14,3 +14,34 @@ thorntail:
     sampler-parameter: 1
     enable-b3-header-propagation: true
     remote-reporter-http-endpoint: 'http://jaeger:14268/api/traces'
+
+  deployment:
+    cases-mgmt-thorntail.war:
+      web:
+        security-constraints:
+          - url-pattern: '/api/v1/cases'
+            methods: ['GET']
+            roles: ['get-all-cases']
+          - url-pattern: '/api/v1/cases/*'
+            methods: ['GET']
+            roles: ['retrieve-case']
+          - url-pattern: '/api/v1/cases/*'
+            methods: ['POST']
+            roles: ['create-case']
+          - url-pattern: '/api/v1/cases'
+            methods: ['PUT']
+            roles: ['update-case']
+          - url-pattern: '/api/v1/cases/*'
+            methods: ['DELETE']
+            roles: ['delete-case']
+
+  keycloak:
+    secure-deployments:
+      cases-mgmt-thorntail.war:
+        realm: 'formation-thorntail'
+        realm-public-key: '<la clé publique du realm>'
+        auth-server-url: 'https://<URL_KEYCLOAK>'
+        resource: 'cases-mgmt'
+        ssl-required: 'external'
+        use-resource-role-mappings: true
+        bearer-only: true
